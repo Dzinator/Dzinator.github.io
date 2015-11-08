@@ -3,8 +3,12 @@
 
 <head>
 	<meta charset="utf-8">
+	<meta name="description" content="My Parse App">
+  	<meta name="viewport" content="width=device-width">
 	
 	<title>Yanis' Webpage</title>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
 
 </head>
 
@@ -15,6 +19,15 @@
 
 		</br></br>
 
+
+		<div style="display:none" id="error" class="error">
+	      <h3><e>Looks like there was a problem saving the comment.</e></h3>
+	    </div>
+
+	    <div style="display:none" id="success" class="success">
+	      <h3><e>Thank you for your input!</e></h3>
+	    </div>
+
 		<h1>Hey there fellas!!</h1>
 
 		</br></br>
@@ -23,6 +36,48 @@
 			<li>Couscous</li>
 			<li>Kefta</li>
 
+		</br></br>
+
+		<div>
+	    	<h3>Write a comment</h3>
+		    
+			<label for="commentTitle">Title</label>
+			<input type="text" id="commentTitle" required>
+			</br>
+			<textarea id="comment" rows="4" cols="50">
+			</textarea> 
+			</br>
+			<input type="button" onclick="handleComment()" value="Send">
+		</div>
+
+		<script type="text/javascript">
+		Parse.initialize("SJEG2VtcQfXvFoMcI3jDw50gqjbdINLNdIFuBLCl", "Af4IdQQKb19fG87b5XH9dD8HQy1b6JP6YmnDynUg");
+    
+		function handleComment() {
+			var postObject = Parse.Object.extend("Post");
+			var post = new postObject();
+
+			var myTitle = document.getElementById("commentTitle").value;
+		    var myContent = document.getElementById("comment").value;
+
+
+		    post.save({
+		    	title: myTitle, 
+		    	content: myContent
+		    }, {
+		      success: function(post) {
+		        document.getElementById("success").style.display = "initial";
+		      },
+		      error: function(post, error) {
+		        document.getElementById("error").style.display = "initial";
+		      }
+		    });
+
+		    return;
+
+		} 
+
+		</script>
 
 	</div>
 
